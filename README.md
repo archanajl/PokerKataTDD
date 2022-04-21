@@ -39,6 +39,11 @@ This helped me to test whether I have able to get the required player values to 
 Check for Straight Flush. The numbers should be consecutive and should belong to the same set. 
 Test it by giving the string in different combinations.
 
+- Step Three:
+
+Check for Four of a kind. 4 cards with the same value. Ranked by the value of the 4 cards.
+Test it by giving the string by both losers, each winner, both winners and also tie.
+
 ### <ins> Testcases </ins>
 
 Please click [here](https://htmlpreview.github.io/?https://github.com/archanajl/BowlingKataTDD/blob/master/docs/Test%20Results%20-%20WinnerPokerTest.html) to see the test results.
