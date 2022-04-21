@@ -1,5 +1,7 @@
 package com.archanajl.pokerkata;
 
+import java.util.Arrays;
+
 public class WinnerPoker {
 
 
@@ -51,16 +53,21 @@ public class WinnerPoker {
     public boolean isPlayerStraightFlush(String strPlayer){
         String strCard = "23456789TJQK";
         String[] strEntry = strPlayer.split(" ");
+        int[] cardValue = { strCard.indexOf(strEntry[0].charAt(0)), strCard.indexOf(strEntry[1].charAt(0)),
+                strCard.indexOf(strEntry[2].charAt(0)),strCard.indexOf(strEntry[3].charAt(0)),
+                strCard.indexOf(strEntry[4].charAt(0)) };
+
         if ((strEntry[0].charAt(1) == strEntry[1].charAt(1))
                 && (strEntry[1].charAt(1) == strEntry[2].charAt(1))
                 && (strEntry[2].charAt(1) == strEntry[3].charAt(1))
                 && (strEntry[3].charAt(1) == strEntry[4].charAt(1))
                 && (strEntry[4].charAt(1) == strEntry[0].charAt(1))
         ){
-            if ( ( strCard.indexOf(strEntry[0].charAt(0)) + 1 == strCard.indexOf(strEntry[1].charAt(0)))
-                    && ( strCard.indexOf(strEntry[1].charAt(0)) + 1 == strCard.indexOf(strEntry[2].charAt(0)))
-                    && ( strCard.indexOf(strEntry[2].charAt(0)) + 1 == strCard.indexOf(strEntry[3].charAt(0)))
-                    && ( strCard.indexOf(strEntry[3].charAt(0)) + 1 == strCard.indexOf(strEntry[4].charAt(0)))
+            Arrays.sort(cardValue);
+            if ( ( cardValue[0] + 1 == cardValue[1])
+                    && ( cardValue[1] + 1 == cardValue[2])
+                    && ( cardValue[2] + 1 == cardValue[3])
+                    && ( cardValue[3] + 1 == cardValue[4])
             ) {
                 return true;
             }

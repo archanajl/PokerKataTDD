@@ -34,6 +34,11 @@ then it determines the winner and gives the result. It implements the above rule
 As it is a TDD based application, I started off by writing a method to receive the input and split it into pairs.
 This helped me to test whether I have able to get the required player values to declare the winner.
 
+- Step Two:
+
+Check for Straight Flush. The numbers should be consecutive and should belong to the same set. 
+Test it by giving the string in different combinations.
+
 ### <ins> Testcases </ins>
 
 Please click [here](https://htmlpreview.github.io/?https://github.com/archanajl/BowlingKataTDD/blob/master/docs/Test%20Results%20-%20WinnerPokerTest.html) to see the test results.
