@@ -1,6 +1,8 @@
 package com.archanajl.pokerkata;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class WinnerPoker {
 
@@ -58,6 +60,11 @@ public class WinnerPoker {
         // Check Flush
         strResult = getWinnerFlush(strPlayer1, strPlayer2);
         if (strResult != "") return strResult;
+
+        // Check Straight
+        strResult = getWinnerStraight(strPlayer1, strPlayer2);
+        if (strResult != "") return strResult;
+
         return strResult;
     }
 
@@ -196,14 +203,49 @@ public class WinnerPoker {
         }
 
         if (isplayer1SetFive && isplayer2SetFive) {
-            //if (card1 > card2) return "Black wins. - Straight Flush." ;
-            //else if (card1 < card2) return "White wins. - Straight Flush.";
-            //else
-
             return getHighCardWinnerString(card1List,card2List,"Flush");
         }
         if (isplayer1SetFive) return "Black wins. - Flush.";
         if (isplayer2SetFive) return "White wins. - Flush.";
+        return "";
+    }
+
+    public String getWinnerStraight(String strPlayer1, String strPlayer2){
+
+        boolean isPlayerOneStrFlush = false;
+        boolean isPlayerTwoStrFlush = false;
+        int card1 = INVALID_VALUE;
+        int card2 = INVALID_VALUE;
+
+        int[] player1cardValues = getCardValues(strPlayer1);
+        Arrays.sort(player1cardValues);
+        card1 = player1cardValues[player1cardValues.length-1];
+        if ( ( player1cardValues[0] + 1 == player1cardValues[1])
+                && ( player1cardValues[1] + 1 == player1cardValues[2])
+                && ( player1cardValues[2] + 1 == player1cardValues[3])
+                && ( player1cardValues[3] + 1 == player1cardValues[4])
+        )  isPlayerOneStrFlush = true;
+
+        int[] player2cardValues = getCardValues(strPlayer2);
+        Arrays.sort(player2cardValues);
+        card2 = player2cardValues[player2cardValues.length-1];
+        if ( ( player2cardValues[0] + 1 == player2cardValues[1])
+                && ( player2cardValues[1] + 1 == player2cardValues[2])
+                && ( player2cardValues[2] + 1 == player2cardValues[3])
+                && ( player2cardValues[3] + 1 == player2cardValues[4])
+        )  isPlayerTwoStrFlush = true;
+
+        if (isPlayerOneStrFlush && isPlayerTwoStrFlush) {
+            ArrayList<Integer> player1List = IntStream.of(player1cardValues)
+                    .boxed()
+                    .collect(Collectors.toCollection(ArrayList::new));
+            ArrayList<Integer> player2List = IntStream.of(player2cardValues)
+                    .boxed()
+                    .collect(Collectors.toCollection(ArrayList::new));
+            return getHighCardWinnerString(player1List, player2List,"Straight");
+        }
+        if (isPlayerOneStrFlush) return "Black wins. - Straight.";
+        if (isPlayerTwoStrFlush) return "White wins. - Straight.";
         return "";
     }
 

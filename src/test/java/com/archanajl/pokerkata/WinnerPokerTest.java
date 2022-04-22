@@ -65,7 +65,6 @@ public class WinnerPokerTest {
         Assertions.assertEquals("Tie.", strExpected);
     }
 
-
     @Test
     public void checkgetWinnerFourOfaKindNoWinner(){
         WinnerPoker poker = new WinnerPoker();
@@ -246,6 +245,48 @@ public class WinnerPokerTest {
         ArrayList<Integer> player2List  = new ArrayList<>(Arrays.asList(9,8,9,9,3));
         String strExpected = poker.getHighCardWinnerString(player1List, player2List,"Flush");
         Assertions.assertEquals("White wins. - Flush.", strExpected);
+    }
+
+    @Test
+    public void checkgetWinnerStraightNoWinner(){
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getWinnerStraight("2H 3D 5S 9C KD","2C 3H 4S 8C AH");
+        Assertions.assertEquals("", strExpected);
+    }
+
+    @Test
+    public void checkgetWinnerStraightWinnerOne(){
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getWinnerStraight("5H 3C 4H 2D 6H","AC AH AD AA 6D");
+        Assertions.assertEquals("Black wins. - Straight.", strExpected);
+    }
+
+    @Test
+    public void checkgetWinnerStraightWinnerTwo(){
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getWinnerStraight("5H 5C 5D 5A 6H","7H 5C 4H 3D 6H");
+        Assertions.assertEquals("White wins. - Straight.", strExpected);
+    }
+
+    @Test
+    public void checkgetWinnerStraightBothPlayersWhiteHigh(){
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getWinnerStraight("5H 3C 4H 2D 6H","7H 5C 4H 3D 6H");
+        Assertions.assertEquals("White wins. - Straight.", strExpected);
+    }
+
+    @Test
+    public void checkgetWinnerStraightBothPlayersBlackHigh(){
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getWinnerStraight("KC QC AD JC TC" ,"5S 3D 4H 2D 6D");
+        Assertions.assertEquals("Black wins. - Straight.", strExpected);
+    }
+
+    @Test
+    public void checkgetWinnerStraightBothPlayersTie(){
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getWinnerStraight("7D 8H 5S 6H 9H","5C 6S 7C 8D 9C");
+        Assertions.assertEquals("Tie.", strExpected);
     }
 }
 

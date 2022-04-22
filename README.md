@@ -55,6 +55,11 @@ Test it by giving the string by both losers, each winner, both winners and also 
 Check for Flush. Hand contains 5 cards of the same suit. Hands which are both flushes are ranked using the rules for High Card.
 Test it by giving the string by both losers, each winner, both winners and also tie.
 
+- Step Six:
+
+Check for Straight. Hand contains 5 cards with consecutive values. 
+Hands which both contain a straight are ranked by their highest card.
+Test it by giving the string by both losers, each winner, both winners and also tie.
 
 ### <ins> Testcases </ins>
 
