@@ -54,6 +54,10 @@ public class WinnerPoker {
         // Check Four of a kind
         strResult = getWinnerFullHouse(strPlayer1, strPlayer2);
         if (strResult != "") return strResult;
+
+        // Check Flush
+        strResult = getWinnerFlush(strPlayer1, strPlayer2);
+        if (strResult != "") return strResult;
         return strResult;
     }
 
@@ -168,17 +172,43 @@ public class WinnerPoker {
         return "";
     }
 
+    public String getWinnerFlush(String strPlayer1, String strPlayer2){
+        boolean isplayer1SetFive = false;
+        boolean isplayer2SetFive = false;
+
+        int card1 = INVALID_VALUE;
+        int card2 = INVALID_VALUE;
+        HashMap<String, ArrayList<Integer>> player1FaceMap = getFaceMap(strPlayer1);
+        for (String card : player1FaceMap.keySet()){
+            if (player1FaceMap.get(card).size() == 5) isplayer1SetFive = true;
+        }
+        HashMap<String, ArrayList<Integer>> player2FaceMap = getFaceMap(strPlayer2);
+        for (String card : player2FaceMap.keySet()){
+            if (player2FaceMap.get(card).size() == 5) isplayer2SetFive = true;
+        }
+
+        if (isplayer1SetFive && isplayer2SetFive) {
+            //if (card1 > card2) return "Black wins. - Straight Flush." ;
+            //else if (card1 < card2) return "White wins. - Straight Flush.";
+            //else
+            return "Tie.";
+        }
+        if (isplayer1SetFive) return "Black wins. - Flush.";
+        if (isplayer2SetFive) return "White wins. - Flush.";
+        return "";
+    }
+
     public HashMap<Integer,ArrayList<String>>  getValueMap(String strPlayer){
 
         HashMap<Integer, ArrayList<String>> valueMap = new HashMap<>();
         String[] strEntries = strPlayer.split(" ");
         for (String strEntry:strEntries ) {
             if (!valueMap.containsKey(strCard.indexOf(strEntry.charAt(0)))) {
-                ArrayList<String> stringList = new ArrayList<String>();
+                ArrayList<String> stringList = new ArrayList<>();
                 stringList.add(Character.toString(strEntry.charAt(1)));
                 valueMap.put(strCard.indexOf(strEntry.charAt(0)), stringList);
             } else {
-                ArrayList<String> stringList = new ArrayList<String>();
+                ArrayList<String> stringList = new ArrayList<>();
                 stringList = valueMap.get(strCard.indexOf(strEntry.charAt(0)));
                 stringList.add(Character.toString(strEntry.charAt(1)));
                 valueMap.put(strCard.indexOf(strEntry.charAt(0)),stringList);

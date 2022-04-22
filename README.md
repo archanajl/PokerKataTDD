@@ -44,6 +44,18 @@ Test it by giving the string in different combinations.
 Check for Four of a kind. 4 cards with the same value. Ranked by the value of the 4 cards.
 Test it by giving the string by both losers, each winner, both winners and also tie.
 
+- Step Four:
+
+Check for Full House. 3 cards of the same value, with the remaining 2 cards forming a pair. 
+Ranked by the value of the 3 cards.
+Test it by giving the string by both losers, each winner, both winners and also tie.
+
+- Step Five:
+
+Check for Flush. Hand contains 5 cards of the same suit. Hands which are both flushes are ranked using the rules for High Card.
+Test it by giving the string by both losers, each winner, both winners and also tie.
+
+
 ### <ins> Testcases </ins>
 
 Please click [here](https://htmlpreview.github.io/?https://github.com/archanajl/BowlingKataTDD/blob/master/docs/Test%20Results%20-%20WinnerPokerTest.html) to see the test results.
