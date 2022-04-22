@@ -5,6 +5,8 @@ import java.util.*;
 public class WinnerPoker {
 
     private final String strCard = "23456789TJQKA";
+    private final int INVALID_VALUE = 99;
+
     public String decalreWinner(){
         return "";
     }
@@ -41,6 +43,21 @@ public class WinnerPoker {
     public String checkWinner(String strPlayer1, String strPlayer2){
 
         String strResult = "";
+        // Check Straight Flush
+        strResult = getWinnerStraightFlush(strPlayer1, strPlayer2);
+        if (strResult != "") return strResult;
+
+        // Check Four of a kind
+        strResult = getWinnerFourOfaKind(strPlayer1, strPlayer2);
+        if (strResult != "") return strResult;
+
+        // Check Four of a kind
+        strResult = getWinnerFullHouse(strPlayer1, strPlayer2);
+        if (strResult != "") return strResult;
+        return strResult;
+    }
+
+    public String getWinnerStraightFlush(String strPlayer1, String strPlayer2){
         int[] player1cardValues = getCardValues(strPlayer1);
         char[] player1faceValues = getFaceValues(strPlayer1);
         int[] player2cardValues = getCardValues(strPlayer2);
@@ -57,23 +74,59 @@ public class WinnerPoker {
             else if (card1 < card2) return "White wins. - Straight Flush.";
             else return "Tie.";
         }
-        // Check Four of a kind
-        strResult = getWinnerFourOfaKind(strPlayer1, strPlayer2);
-        if (strResult != "") return strResult;
-
-        // Check Four of a kind
-        strResult = getWinnerFullHouse(strPlayer1, strPlayer2);
-        if (strResult != "") return strResult;
-        return strResult;
-    }
-
-    public String getWinnerFullHouse(String strPlayer1, String strPlayer2){
+        if (isPlayerOneStrFlush) return "Black wins. - Straight Flush.";
+        if (isPlayerTwoStrFlush) return "White wins. - Straight Flush.";
         return "";
     }
 
+    public String getWinnerFullHouse(String strPlayer1, String strPlayer2){
+        int value1ThreeSet = INVALID_VALUE;
+        int value2ThreeSet = INVALID_VALUE;
+        int value1TwoSet = INVALID_VALUE;
+        int value2TwoSet = INVALID_VALUE;
+        boolean isPlayer1FullHouse = false;
+        boolean isPlayer2FullHouse = false;
+        String strBlackWins ="";
+        String strWhiteWins = "";
+        HashMap<Integer, ArrayList<String>> player1ValueMap = getValueMap(strPlayer1);
+        for (Integer num : player1ValueMap.keySet()){
+            if (player1ValueMap.get(num).size() == 3) value1ThreeSet = num;
+            if (player1ValueMap.get(num).size() == 2) value1TwoSet = num;
+        }
+
+        HashMap<Integer, ArrayList<String>> player2ValueMap = getValueMap(strPlayer2);
+        for (Integer num : player2ValueMap.keySet()){
+            if (player2ValueMap.get(num).size() == 3) value2ThreeSet = num;
+            if (player2ValueMap.get(num).size() == 2) value2TwoSet = num;
+        }
+        if (value1ThreeSet != INVALID_VALUE && value1TwoSet != INVALID_VALUE) {
+            isPlayer1FullHouse = true;
+            strBlackWins = "Black wins. - Full House: " + strCard.charAt(value1ThreeSet)
+                    + " over " + strCard.charAt(value1TwoSet);
+        }
+        if (value2ThreeSet != INVALID_VALUE && value2TwoSet != INVALID_VALUE) {
+            isPlayer2FullHouse = true;
+            strWhiteWins = "White wins. - Full House: " + strCard.charAt(value2ThreeSet)
+                    + " over " + strCard.charAt(value2TwoSet);
+        }
+        if (isPlayer1FullHouse && isPlayer2FullHouse){
+            if (value1ThreeSet > value2ThreeSet)
+                return strBlackWins;
+            else if (value1ThreeSet < value2ThreeSet)
+                return strWhiteWins;
+            else return "Tie.";
+        }
+        if(isPlayer1FullHouse)
+            return strBlackWins;
+        if(isPlayer2FullHouse)
+            return strWhiteWins ;
+        return "";
+
+    }
+
     public  String getWinnerFourOfaKind(String strPlayer1, String strPlayer2){
-        int value1Four = 99;
-        int value2Four = 99;
+        int value1Four = INVALID_VALUE;
+        int value2Four = INVALID_VALUE;
         HashMap<Integer, ArrayList<String>> player1ValueMap = getValueMap(strPlayer1);
         for (Integer num : player1ValueMap.keySet()){
             if (player1ValueMap.get(num).size() == 4) value1Four = num;
@@ -82,13 +135,13 @@ public class WinnerPoker {
         for (Integer num : player2ValueMap.keySet()){
             if (player2ValueMap.get(num).size() == 4) value2Four = num;
         }
-        if ((value1Four != 99) && (value2Four != 99)){
+        if ((value1Four != INVALID_VALUE) && (value2Four != INVALID_VALUE)){
             if (value1Four > value2Four) return "Black wins. - Four of a Kind: " + strCard.charAt(value1Four);
             else if (value1Four < value2Four) return "White wins. - Four of a Kind: " + strCard.charAt(value2Four);
             else return "Tie.";
         }
-        if(value1Four != 99) return "White wins. - Four of a Kind: " + strCard.charAt(value1Four) ;
-        if(value2Four != 99) return "Black wins. - Four of a Kind: " + strCard.charAt(value2Four) ;
+        if(value1Four != INVALID_VALUE) return "White wins. - Four of a Kind: " + strCard.charAt(value1Four) ;
+        if(value2Four != INVALID_VALUE) return "Black wins. - Four of a Kind: " + strCard.charAt(value2Four) ;
         return "";
     }
 

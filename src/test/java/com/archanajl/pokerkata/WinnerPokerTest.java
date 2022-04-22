@@ -126,7 +126,7 @@ public class WinnerPokerTest {
     public void checkgetWinnerFullHouseWinnerTwo(){
         WinnerPoker poker = new WinnerPoker();
         String strExpected = poker.getWinnerFullHouse("5H 3H 4D 2H 6D","AC AH AD 4A 4D");
-        Assertions.assertEquals("White wins. - Full House : A over 4", strExpected);
+        Assertions.assertEquals("White wins. - Full House: A over 4", strExpected);
     }
 
     @Test
