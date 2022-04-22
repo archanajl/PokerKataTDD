@@ -11,7 +11,7 @@ public class WinnerPoker {
         return "";
     }
 
-    public void sortInput(String input){
+    public void decalreWinner(String input){
         String[][] inputArr = getInputPlayersArray(input);
         int numberofentry = inputArr.length;
         String strPlayer1 ;
@@ -22,7 +22,7 @@ public class WinnerPoker {
             strPlayer1 = inputArr[i][0];
             strPlayer2 = inputArr[i][1];
             winner = checkWinner(strPlayer1,strPlayer2);
-            System.out.println(winner);
+            System.out.println("The result for Game " + (i + 1) + " : " + winner);
         }
     }
 
@@ -58,18 +58,41 @@ public class WinnerPoker {
     }
 
     public String getWinnerStraightFlush(String strPlayer1, String strPlayer2){
-        int[] player1cardValues = getCardValues(strPlayer1);
-        char[] player1faceValues = getFaceValues(strPlayer1);
-        int[] player2cardValues = getCardValues(strPlayer2);
-        char[] player2faceValues = getFaceValues(strPlayer2);
-        // Check Straight Flush
-        boolean isPlayerOneStrFlush = isPlayerStraightFlush(player1cardValues,player1faceValues );
-        boolean isPlayerTwoStrFlush = isPlayerStraightFlush(player2cardValues,player2faceValues );
-        if (isPlayerOneStrFlush && isPlayerTwoStrFlush) {
+        boolean isplayer1SetFive = false;
+        boolean isplayer2SetFive = false;
+        boolean isPlayerOneStrFlush = false;
+        boolean isPlayerTwoStrFlush = false;
+        int card1 = INVALID_VALUE;
+        int card2 = INVALID_VALUE;
+        HashMap<String, ArrayList<Integer>> player1FaceMap = getFaceMap(strPlayer1);
+        for (String card : player1FaceMap.keySet()){
+            if (player1FaceMap.get(card).size() == 5) isplayer1SetFive = true;
+        }
+        HashMap<String, ArrayList<Integer>> player2FaceMap = getFaceMap(strPlayer2);
+        for (String card : player2FaceMap.keySet()){
+            if (player2FaceMap.get(card).size() == 5) isplayer2SetFive = true;
+        }
+        if (isplayer1SetFive){
+            int[] player1cardValues = getCardValues(strPlayer1);
             Arrays.sort(player1cardValues);
+            card1 = player1cardValues[player1cardValues.length-1];
+            if ( ( player1cardValues[0] + 1 == player1cardValues[1])
+                    && ( player1cardValues[1] + 1 == player1cardValues[2])
+                    && ( player1cardValues[2] + 1 == player1cardValues[3])
+                    && ( player1cardValues[3] + 1 == player1cardValues[4])
+            )  isPlayerOneStrFlush = true;
+        }
+        if (isplayer2SetFive){
+            int[] player2cardValues = getCardValues(strPlayer2);
             Arrays.sort(player2cardValues);
-            int card1 = player1cardValues[0];
-            int card2 = player2cardValues[0];
+            card2 = player2cardValues[player2cardValues.length-1];
+            if ( ( player2cardValues[0] + 1 == player2cardValues[1])
+                    && ( player2cardValues[1] + 1 == player2cardValues[2])
+                    && ( player2cardValues[2] + 1 == player2cardValues[3])
+                    && ( player2cardValues[3] + 1 == player2cardValues[4])
+            )  isPlayerTwoStrFlush = true;
+        }
+        if (isPlayerOneStrFlush && isPlayerTwoStrFlush) {
             if (card1 > card2) return "Black wins. - Straight Flush." ;
             else if (card1 < card2) return "White wins. - Straight Flush.";
             else return "Tie.";
@@ -166,11 +189,21 @@ public class WinnerPoker {
 
     public HashMap<String,ArrayList<Integer>>  getFaceMap(String strPlayer){
         HashMap<String, ArrayList<Integer>> faceMap = new HashMap<>();
-        ArrayList<Integer> integerList = new ArrayList<Integer>();
-        String[] strEntry = strPlayer.split(" ");
-        List<String> uList = new ArrayList<String>();
-        faceMap.put(Character.toString(strEntry[0].charAt(1)), integerList);
-        faceMap.get(Character.toString(strEntry[0].charAt(1))).add(strCard.indexOf(strEntry[0].charAt(0)));
+        String[] strEntries = strPlayer.split(" ");
+        int value;
+        for (String strEntry:strEntries ) {
+             value = strCard.indexOf(strEntry.charAt(0));//Integer.parseInt(String.valueOf(strEntry.charAt(0)));
+            if (!faceMap.containsKey(Character.toString(strEntry.charAt(1)))) {
+                ArrayList<Integer> integerList = new ArrayList<Integer>();
+                integerList.add(value);
+                faceMap.put(Character.toString(strEntry.charAt(1)), integerList);
+            } else {
+                ArrayList<Integer> integerList = new ArrayList<Integer>();
+                integerList = faceMap.get(Character.toString(strEntry.charAt(1)));
+                integerList.add(value);
+                faceMap.put(Character.toString(strEntry.charAt(1)),integerList);
+            }
+        }
         return faceMap;
     }
 

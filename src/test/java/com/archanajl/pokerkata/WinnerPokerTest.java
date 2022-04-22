@@ -1,6 +1,5 @@
 package com.archanajl.pokerkata;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
@@ -65,6 +64,49 @@ public class WinnerPokerTest {
         Assertions.assertTrue(poker.isPlayerStraightFlush(cardValues,faceValues));
 
     }
+
+    @Test
+    public void checkgetWinnerStraightFlushNoWinner(){
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getWinnerStraightFlush("5H 3H 4H 2C 6H","5H 3D 4H 2H 6H");
+        Assertions.assertEquals("", strExpected);
+    }
+
+    @Test
+    public void checkgetWinnerStraightFlushWinnerOne(){
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getWinnerStraightFlush("5H 3H 4H 2H 6H","AC AH AD AA 6D");
+        Assertions.assertEquals("Black wins. - Straight Flush.", strExpected);
+    }
+
+    @Test
+    public void checkgetWinnerStraightFlushWinnerTwo(){
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getWinnerStraightFlush("5H 5C 5D 5A 6H","5H 3H 4H 2H 6H");
+        Assertions.assertEquals("White wins. - Straight Flush.", strExpected);
+    }
+
+    @Test
+    public void checkgetWinnerStraightFlushBothPlayersWhiteHigh(){
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getWinnerStraightFlush("5H 3H 4H 2H 6H","8C 7C 4C 5C 6C");
+        Assertions.assertEquals("White wins. - Straight Flush.", strExpected);
+    }
+
+    @Test
+    public void checkgetWinnerStraightFlushBothPlayersBlackHigh(){
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getWinnerStraightFlush("KC QC AC JC TC" ,"5D 3D 4D 2D 6D");
+        Assertions.assertEquals("Black wins. - Straight Flush.", strExpected);
+    }
+
+    @Test
+    public void checkgetWinnerStraightFlushBothPlayersTie(){
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getWinnerStraightFlush("7H 8H 5H 6H 9H","5C 6C 7C 8C 9C");
+        Assertions.assertEquals("Tie.", strExpected);
+    }
+
 
     @Test
     public void checkgetWinnerFourOfaKindNoWinner(){
