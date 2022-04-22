@@ -175,29 +175,64 @@ public class WinnerPoker {
     public String getWinnerFlush(String strPlayer1, String strPlayer2){
         boolean isplayer1SetFive = false;
         boolean isplayer2SetFive = false;
+        ArrayList<Integer> card1List = new ArrayList<>();
+        ArrayList<Integer> card2List = new ArrayList<>();
 
         int card1 = INVALID_VALUE;
         int card2 = INVALID_VALUE;
         HashMap<String, ArrayList<Integer>> player1FaceMap = getFaceMap(strPlayer1);
         for (String card : player1FaceMap.keySet()){
-            if (player1FaceMap.get(card).size() == 5) isplayer1SetFive = true;
+            if (player1FaceMap.get(card).size() == 5) {
+                isplayer1SetFive = true;
+                card1List =player1FaceMap.get(card);
+            }
         }
         HashMap<String, ArrayList<Integer>> player2FaceMap = getFaceMap(strPlayer2);
         for (String card : player2FaceMap.keySet()){
-            if (player2FaceMap.get(card).size() == 5) isplayer2SetFive = true;
+            if (player2FaceMap.get(card).size() == 5) {
+                isplayer2SetFive = true;
+                card2List =player2FaceMap.get(card);
+            }
         }
 
         if (isplayer1SetFive && isplayer2SetFive) {
             //if (card1 > card2) return "Black wins. - Straight Flush." ;
             //else if (card1 < card2) return "White wins. - Straight Flush.";
             //else
-            return "Tie.";
+
+            return getHighCardWinnerString(card1List,card2List,"Flush");
         }
         if (isplayer1SetFive) return "Black wins. - Flush.";
         if (isplayer2SetFive) return "White wins. - Flush.";
         return "";
     }
 
+    public String getHighCardWinnerString(ArrayList<Integer> player1List, ArrayList<Integer> player2List, String winnerType){
+
+        boolean foundMax = false;
+        while(!foundMax ) {
+            Optional<Integer> max1Number = player1List.stream()
+                    .max((i, j) -> i.compareTo(j));
+            Optional<Integer> max2Number = player2List.stream()
+                    .max((i, j) -> i.compareTo(j));
+            if (max1Number.get() > max2Number.get()){
+                foundMax =true;
+                return "Black wins. - " + winnerType + ".";
+            }else if (max1Number.get() < max2Number.get()){
+                foundMax =true;
+                return "White wins. - " + winnerType + ".";
+            }else{
+                foundMax = false;
+                player1List.remove(max1Number.get());
+                player2List.remove(max2Number.get());
+                if (player1List.size() == 0 && player2List.size() == 0) return "Tie.";
+                if (player1List.size() == 0) return "Black wins. - " + winnerType + ".";
+                if (player2List.size() == 0) return "White wins. - " + winnerType + ".";
+            }
+        }
+
+        return "";
+    }
     public HashMap<Integer,ArrayList<String>>  getValueMap(String strPlayer){
 
         HashMap<Integer, ArrayList<String>> valueMap = new HashMap<>();
