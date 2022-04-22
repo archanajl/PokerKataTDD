@@ -19,7 +19,6 @@ public class WinnerPoker {
         String strPlayer1 ;
         String strPlayer2;
         String winner;
-        System.out.println(numberofentry);
         for (int i=0; i <= numberofentry - 1; i++ ){
             strPlayer1 = inputArr[i][0];
             strPlayer2 = inputArr[i][1];
@@ -50,7 +49,7 @@ public class WinnerPoker {
         if (strResult != "") return strResult;
 
         // Check Four of a kind
-        strResult = getWinnerFourOfaKind(strPlayer1, strPlayer2);
+        strResult = getWinnerNOfaKind(strPlayer1, strPlayer2,4);
         if (strResult != "") return strResult;
 
         // Check Four of a kind
@@ -63,6 +62,10 @@ public class WinnerPoker {
 
         // Check Straight
         strResult = getWinnerStraight(strPlayer1, strPlayer2);
+        if (strResult != "") return strResult;
+
+        // Check Three of a kind
+        strResult = getWinnerNOfaKind(strPlayer1, strPlayer2,3);
         if (strResult != "") return strResult;
 
         return strResult;
@@ -158,24 +161,27 @@ public class WinnerPoker {
 
     }
 
-    public  String getWinnerFourOfaKind(String strPlayer1, String strPlayer2){
+    public  String getWinnerNOfaKind(String strPlayer1, String strPlayer2, int n){
         int value1Four = INVALID_VALUE;
         int value2Four = INVALID_VALUE;
+        String strWinnerType = "";
+        if (n==4) strWinnerType = "Four of a Kind";
+        if (n==3) strWinnerType = "Three of a Kind";
         HashMap<Integer, ArrayList<String>> player1ValueMap = getValueMap(strPlayer1);
         for (Integer num : player1ValueMap.keySet()){
-            if (player1ValueMap.get(num).size() == 4) value1Four = num;
+            if (player1ValueMap.get(num).size() == n) value1Four = num;
         }
         HashMap<Integer, ArrayList<String>> player2ValueMap = getValueMap(strPlayer2);
         for (Integer num : player2ValueMap.keySet()){
-            if (player2ValueMap.get(num).size() == 4) value2Four = num;
+            if (player2ValueMap.get(num).size() == n) value2Four = num;
         }
         if ((value1Four != INVALID_VALUE) && (value2Four != INVALID_VALUE)){
-            if (value1Four > value2Four) return "Black wins. - Four of a Kind: " + strCard.charAt(value1Four);
-            else if (value1Four < value2Four) return "White wins. - Four of a Kind: " + strCard.charAt(value2Four);
+            if (value1Four > value2Four) return "Black wins. - "+ strWinnerType + ": " + strCard.charAt(value1Four);
+            else if (value1Four < value2Four) return "White wins. - "+ strWinnerType + ": " + strCard.charAt(value2Four);
             else return "Tie.";
         }
-        if(value1Four != INVALID_VALUE) return "White wins. - Four of a Kind: " + strCard.charAt(value1Four) ;
-        if(value2Four != INVALID_VALUE) return "Black wins. - Four of a Kind: " + strCard.charAt(value2Four) ;
+        if(value1Four != INVALID_VALUE) return "Black wins. - "+ strWinnerType + ": " + strCard.charAt(value1Four) ;
+        if(value2Four != INVALID_VALUE) return "White wins. - "+ strWinnerType + ": " + strCard.charAt(value2Four) ;
         return "";
     }
 

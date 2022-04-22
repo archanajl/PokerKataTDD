@@ -61,6 +61,12 @@ Check for Straight. Hand contains 5 cards with consecutive values.
 Hands which both contain a straight are ranked by their highest card.
 Test it by giving the string by both losers, each winner, both winners and also tie.
 
+- Step Six:
+
+Check for Three of a Kind: Three of the cards in the hand have the same value. 
+Hands which both contain three of a kind are ranked by the value of the 3 cards.
+Test it by giving the string by both losers, each winner, both winners and also tie.
+
 ### <ins> Testcases </ins>
 
 Please click [here](https://htmlpreview.github.io/?https://github.com/archanajl/BowlingKataTDD/blob/master/docs/Test%20Results%20-%20WinnerPokerTest.html) to see the test results.

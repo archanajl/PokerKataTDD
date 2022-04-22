@@ -68,43 +68,36 @@ public class WinnerPokerTest {
     @Test
     public void checkgetWinnerFourOfaKindNoWinner(){
         WinnerPoker poker = new WinnerPoker();
-        String strExpected = poker.getWinnerFourOfaKind("5H 3H 4H 2H 6H","5H 3H 4H 2H 6H");
+        String strExpected = poker.getWinnerNOfaKind("5H 3H 4H 2H 6H","5H 3H 4H 2H 6H",4);
         Assertions.assertEquals("", strExpected);
     }
 
     @Test
     public void checkgetWinnerFourOfaKindWinnerOne(){
         WinnerPoker poker = new WinnerPoker();
-        String strExpected = poker.getWinnerFourOfaKind("5H 3H 4D 2H 6D","AC AH AD AA 6D");
-        Assertions.assertEquals("Black wins. - Four of a Kind: A", strExpected);
+        String strExpected = poker.getWinnerNOfaKind("5H 5C 5D 5A 6H","5H 3H 4D 2H 6D",4);
+        Assertions.assertEquals("Black wins. - Four of a Kind: 5", strExpected);
     }
 
     @Test
     public void checkgetWinnerFourOfaKindWinnerTwo(){
         WinnerPoker poker = new WinnerPoker();
-        String strExpected = poker.getWinnerFourOfaKind("5H 5C 5D 5A 6H","5H 3H 4D 2H 6D");
-        Assertions.assertEquals("White wins. - Four of a Kind: 5", strExpected);
+        String strExpected = poker.getWinnerNOfaKind("5H 3H 4D 2H 6D","AC AH AD AA 6D",4);
+        Assertions.assertEquals("White wins. - Four of a Kind: A", strExpected);
     }
 
     @Test
     public void checkgetWinnerFourOfaKindBothPlayersWhiteHigh(){
         WinnerPoker poker = new WinnerPoker();
-        String strExpected = poker.getWinnerFourOfaKind("5H 5C 5D 5A 6H","AC AH AD AA 6D");
+        String strExpected = poker.getWinnerNOfaKind("5H 5C 5D 5A 6H","AC AH AD AA 6D",4);
         Assertions.assertEquals("White wins. - Four of a Kind: A", strExpected);
     }
 
     @Test
     public void checkgetWinnerFourOfaKindBothPlayersBlackHigh(){
         WinnerPoker poker = new WinnerPoker();
-        String strExpected = poker.getWinnerFourOfaKind("7H 7C 7D 7A 4H","2C 2H 3D 2A 2D");
+        String strExpected = poker.getWinnerNOfaKind("7H 7C 7D 7A 4H","2C 2H 3D 2A 2D",4);
         Assertions.assertEquals("Black wins. - Four of a Kind: 7", strExpected);
-    }
-
-    @Test
-    public void checkgetWinnerFourOfaKindBothPlayersTie(){
-        WinnerPoker poker = new WinnerPoker();
-        String strExpected = poker.getWinnerFourOfaKind("5H 5C 5D 5A 6H","5H 5A 5D 5C AA");
-        Assertions.assertEquals("Tie.", strExpected);
     }
 
     @Test
@@ -288,6 +281,42 @@ public class WinnerPokerTest {
         String strExpected = poker.getWinnerStraight("7D 8H 5S 6H 9H","5C 6S 7C 8D 9C");
         Assertions.assertEquals("Tie.", strExpected);
     }
+
+    @Test
+    public void checkgetWinnerThreeOfaKindNoWinner(){
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getWinnerNOfaKind("5H 3H 4H 2H 6H","5H 3H 4H 2H 6H",3);
+        Assertions.assertEquals("", strExpected);
+    }
+
+    @Test
+    public void checkgetWinnerThreeOfaKindWinnerOne(){
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getWinnerNOfaKind("5H 5C 5D TA 6H","5H 3H 4D 2H 6D",3);
+        Assertions.assertEquals("Black wins. - Three of a Kind: 5", strExpected);
+    }
+
+    @Test
+    public void checkgetWinnerThreeOfaKindWinnerTwo(){
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getWinnerNOfaKind("5H 3H 4D 2H 6D","AC AH AD 9S 6D",3);
+        Assertions.assertEquals("White wins. - Three of a Kind: A", strExpected);
+    }
+
+    @Test
+    public void checkgetWinnerThreeOfaKindBothPlayersWhiteHigh(){
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getWinnerNOfaKind("5H 2C 5D 5A 6H","AC AH AD 9S 6D",3);
+        Assertions.assertEquals("White wins. - Three of a Kind: A", strExpected);
+    }
+
+    @Test
+    public void checkgetWinnerThreeOfaKindBothPlayersBlackHigh(){
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getWinnerNOfaKind("7H 7C 8D 7S 4H","2C 2H 3D 8S 2D",3);
+        Assertions.assertEquals("Black wins. - Three of a Kind: 7", strExpected);
+    }
+
 }
 
 
