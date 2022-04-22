@@ -53,15 +53,22 @@ public class WinnerPoker {
             Arrays.sort(player2cardValues);
             int card1 = player1cardValues[0];
             int card2 = player2cardValues[0];
-            if (card1 > card2) return "Black wins. - Straight Flush " + card1 + " over " + card2 ;
-            else if (card1 < card2) return "White wins. - Straight Flush " + card2 + " over " + card1 ;
+            if (card1 > card2) return "Black wins. - Straight Flush." ;
+            else if (card1 < card2) return "White wins. - Straight Flush.";
             else return "Tie.";
         }
         // Check Four of a kind
         strResult = getWinnerFourOfaKind(strPlayer1, strPlayer2);
         if (strResult != "") return strResult;
-        return strResult;
 
+        // Check Four of a kind
+        strResult = getWinnerFullHouse(strPlayer1, strPlayer2);
+        if (strResult != "") return strResult;
+        return strResult;
+    }
+
+    public String getWinnerFullHouse(String strPlayer1, String strPlayer2){
+        return "";
     }
 
     public  String getWinnerFourOfaKind(String strPlayer1, String strPlayer2){
@@ -76,8 +83,8 @@ public class WinnerPoker {
             if (player2ValueMap.get(num).size() == 4) value2Four = num;
         }
         if ((value1Four != 99) && (value2Four != 99)){
-            if (value1Four > value2Four) return "Black wins. - Four of a Kind: " + strCard.charAt(value1Four) + " over " + strCard.charAt(value2Four) ;
-            else if (value1Four < value2Four) return "White wins. - Four of a Kind: " + strCard.charAt(value2Four) + " over " + strCard.charAt(value1Four) ;
+            if (value1Four > value2Four) return "Black wins. - Four of a Kind: " + strCard.charAt(value1Four);
+            else if (value1Four < value2Four) return "White wins. - Four of a Kind: " + strCard.charAt(value2Four);
             else return "Tie.";
         }
         if(value1Four != 99) return "White wins. - Four of a Kind: " + strCard.charAt(value1Four) ;

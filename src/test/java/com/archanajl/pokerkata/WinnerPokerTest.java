@@ -76,29 +76,29 @@ public class WinnerPokerTest {
     @Test
     public void checkgetWinnerFourOfaKindWinnerOne(){
         WinnerPoker poker = new WinnerPoker();
-        String strExpected = poker.getWinnerFourOfaKind("5H 5C 5D 5A 6H","5H 3H 4D 2H 6D");
-        Assertions.assertEquals("White wins. - Four of a Kind: 5", strExpected);
+        String strExpected = poker.getWinnerFourOfaKind("5H 3H 4D 2H 6D","AC AH AD AA 6D");
+        Assertions.assertEquals("Black wins. - Four of a Kind: A", strExpected);
     }
 
     @Test
     public void checkgetWinnerFourOfaKindWinnerTwo(){
         WinnerPoker poker = new WinnerPoker();
-        String strExpected = poker.getWinnerFourOfaKind("5H 3H 4D 2H 6D","AC AH AD AA 6D");
-        Assertions.assertEquals("Black wins. - Four of a Kind: A", strExpected);
+        String strExpected = poker.getWinnerFourOfaKind("5H 5C 5D 5A 6H","5H 3H 4D 2H 6D");
+        Assertions.assertEquals("White wins. - Four of a Kind: 5", strExpected);
     }
 
     @Test
     public void checkgetWinnerFourOfaKindBothPlayersWhiteHigh(){
         WinnerPoker poker = new WinnerPoker();
         String strExpected = poker.getWinnerFourOfaKind("5H 5C 5D 5A 6H","AC AH AD AA 6D");
-        Assertions.assertEquals("White wins. - Four of a Kind: A over 5", strExpected);
+        Assertions.assertEquals("White wins. - Four of a Kind: A", strExpected);
     }
 
     @Test
     public void checkgetWinnerFourOfaKindBothPlayersBlackHigh(){
         WinnerPoker poker = new WinnerPoker();
         String strExpected = poker.getWinnerFourOfaKind("7H 7C 7D 7A 4H","2C 2H 3D 2A 2D");
-        Assertions.assertEquals("Black wins. - Four of a Kind: 7 over 2", strExpected);
+        Assertions.assertEquals("Black wins. - Four of a Kind: 7", strExpected);
     }
 
     @Test
@@ -107,6 +107,42 @@ public class WinnerPokerTest {
         String strExpected = poker.getWinnerFourOfaKind("5H 5C 5D 5A 6H","5H 5A 5D 5C AA");
         Assertions.assertEquals("Tie.", strExpected);
     }
+
+    @Test
+    public void checkgetWinnerFullHouseNoWinner(){
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getWinnerFullHouse("5H 3H 4H 2H 6H","5H 3H 4H 2H 6H");
+        Assertions.assertEquals("", strExpected);
+    }
+
+    @Test
+    public void checkgetWinnerFullHouseWinnerOne(){
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getWinnerFullHouse("5H 5C 5D 6A 6H","5H 3H 4D 2H 6D");
+        Assertions.assertEquals("Black wins. - Full House: 5 over 6", strExpected);
+    }
+
+    @Test
+    public void checkgetWinnerFullHouseWinnerTwo(){
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getWinnerFullHouse("5H 3H 4D 2H 6D","AC AH AD 4A 4D");
+        Assertions.assertEquals("White wins. - Full House : A over 4", strExpected);
+    }
+
+    @Test
+    public void checkgetWinnerFullHouseBothPlayersWhiteHigh(){
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getWinnerFullHouse("5H 5C 5D 6A 6H","AC AH AD 4A 4D");
+        Assertions.assertEquals("White wins. - Full House: A over 4", strExpected);
+    }
+
+    @Test
+    public void checkgetWinnerFullHouseBothPlayersBlackHigh(){
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getWinnerFullHouse("AC AH AD 4A 4D","5H 5C 5D 6A 6H");
+        Assertions.assertEquals("Black wins. - Full House: A over 4", strExpected);
+    }
+
 
 }
 
