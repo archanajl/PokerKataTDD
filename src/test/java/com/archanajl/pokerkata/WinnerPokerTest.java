@@ -23,49 +23,6 @@ public class WinnerPokerTest {
     }
 
     @Test
-    public void checkisPlayerStraightFlushValid(){
-        WinnerPoker poker = new WinnerPoker();
-        int[] cardValues = poker.getCardValues("2H 3H 4H 5H 6H");
-        char[] faceValues = poker.getFaceValues("2H 3H 4H 5H 6H");
-        Assertions.assertTrue(poker.isPlayerStraightFlush(cardValues,faceValues));
-    }
-
-    @Test
-    public void checkisPlayerStraightFlushInOrderButDifferentSet(){
-        WinnerPoker poker = new WinnerPoker();
-        int[] cardValues = poker.getCardValues("2H 3H 4C 5H 6H");
-        char[] faceValues = poker.getFaceValues("2H 3H 4C 5H 6H");
-        Assertions.assertFalse(poker.isPlayerStraightFlush(cardValues,faceValues));
-    }
-
-    @Test
-    public void checkisPlayerStraightFlushNotInOrderButsameSet(){
-        WinnerPoker poker = new WinnerPoker();
-        int[] cardValues = poker.getCardValues("2H TH 4H 5H 6H");
-        char[] faceValues = poker.getFaceValues("2H TH 4H 5H 6H");
-        Assertions.assertFalse(poker.isPlayerStraightFlush(cardValues,faceValues));
-
-    }
-
-    @Test
-    public void checkisPlayerStraightFlushNotInOrderAndDifferentSet(){
-        WinnerPoker poker = new WinnerPoker();
-        int[] cardValues = poker.getCardValues("2H TH 4H 5C AA");
-        char[] faceValues = poker.getFaceValues("2H TH 4H 5C AA");
-        Assertions.assertFalse(poker.isPlayerStraightFlush(cardValues,faceValues));
-
-    }
-
-    @Test
-    public void checkisPlayerStraightFlushInOrderButnotintheString(){
-        WinnerPoker poker = new WinnerPoker();
-        int[] cardValues = poker.getCardValues("5H 3H 4H 2H 6H");
-        char[] faceValues = poker.getFaceValues("5H 3H 4H 2H 6H");
-        Assertions.assertTrue(poker.isPlayerStraightFlush(cardValues,faceValues));
-
-    }
-
-    @Test
     public void checkgetWinnerStraightFlushNoWinner(){
         WinnerPoker poker = new WinnerPoker();
         String strExpected = poker.getWinnerStraightFlush("5H 3H 4H 2C 6H","5H 3D 4H 2H 6H");

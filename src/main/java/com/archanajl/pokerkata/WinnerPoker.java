@@ -224,23 +224,4 @@ public class WinnerPoker {
         return faceValues;
     }
 
-    public boolean isPlayerStraightFlush(int[] cardValues, char[] faceValues){
-        String strCard = "23456789TJQK";
-        if ((faceValues[0] == faceValues[1])
-                && (faceValues[1] == faceValues[2])
-                && (faceValues[2] == faceValues[3])
-                && (faceValues[3] == faceValues[4])
-                && (faceValues[4] == faceValues[0])
-        ){
-            Arrays.sort(cardValues);
-            if ( ( cardValues[0] + 1 == cardValues[1])
-                    && ( cardValues[1] + 1 == cardValues[2])
-                    && ( cardValues[2] + 1 == cardValues[3])
-                    && ( cardValues[3] + 1 == cardValues[4])
-            ) {
-                return true;
-            }
-        }
-        return false;
-    }
 }
