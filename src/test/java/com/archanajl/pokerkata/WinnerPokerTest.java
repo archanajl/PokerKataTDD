@@ -185,6 +185,15 @@ public class WinnerPokerTest {
         String strExpected = poker.getHighCardWinnerString(player1List, player2List,"Flush");
         Assertions.assertEquals("Black wins. - Flush.", strExpected);
     }
+/////////////////
+    @Test
+    public void checkgetHigh(){
+        WinnerPoker poker = new WinnerPoker();
+        ArrayList<Integer> player1List  = new ArrayList<>(Arrays.asList(5, 6, 3, 4, 7));
+        ArrayList<Integer> player2List  = new ArrayList<>(Arrays.asList(3,4,5,1,0));
+        String strExpected = poker.getHighCardWinnerString(player1List, player2List,"Flush");
+        Assertions.assertEquals("Black wins. - Flush.", strExpected);
+    }
 
     @Test
     public void checkgetHighCardWinnerStringWhiteWin() {
@@ -229,15 +238,6 @@ public class WinnerPokerTest {
         ArrayList<Integer> player2List  = new ArrayList<>(Arrays.asList(9,8,9,3,2));
         String strExpected = poker.getHighCardWinnerString(player1List, player2List,"Flush");
         Assertions.assertEquals("Tie.", strExpected);
-    }
-
-    @Test
-    public void checkgetHighCardWinnerStringWithExtra(){
-        WinnerPoker poker = new WinnerPoker();
-        ArrayList<Integer> player1List  = new ArrayList<>(Arrays.asList(8, 9, 2, 3, 9));
-        ArrayList<Integer> player2List  = new ArrayList<>(Arrays.asList(9,8,9,9,3));
-        String strExpected = poker.getHighCardWinnerString(player1List, player2List,"Flush");
-        Assertions.assertEquals("White wins. - Flush.", strExpected);
     }
 
     @Test
@@ -316,6 +316,49 @@ public class WinnerPokerTest {
         String strExpected = poker.getWinnerNOfaKind("7H 7C 8D 7S 4H","2C 2H 3D 8S 2D",3);
         Assertions.assertEquals("Black wins. - Three of a Kind: 7", strExpected);
     }
+
+    @Test
+    public void checkgetHighCardWinnerBlackWin(){
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getWinnerHighCard("7H 8S 5D 6C 9S","5S 6C 7D 3C 2H");
+        Assertions.assertEquals("Black wins. - High card.", strExpected);
+    }
+
+    @Test
+    public void checkgetHighCardWinnerWhiteWin() {
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getWinnerHighCard("7H 8S 5D 6C 9S","5S 6C QD 3C 2H");
+        Assertions.assertEquals("White wins. - High card.", strExpected);
+    }
+
+    @Test
+    public void checkgetHighCardWinnerBlackWinWithRepeat(){
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getWinnerHighCard("7H 9S 5D 6C 9S","7S 6C 7D 3C 2H");
+        Assertions.assertEquals("Black wins. - High card.", strExpected);
+    }
+
+    @Test
+    public void checkgetHighCardWinnerBlackWinWithRepeatMax(){
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getWinnerHighCard("7H 9S 5D 6C 9S","9C 6C 9D 3C 2H");
+        Assertions.assertEquals("Black wins. - High card.", strExpected);
+    }
+
+    @Test
+    public void checkgetHighCardWinnerWhiteWinWithRepeatMax(){
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getWinnerHighCard("7H 9S 5D 6C 9D","9H 8C 9C 3C 2H");
+        Assertions.assertEquals("White wins. - High card.", strExpected);
+    }
+
+    @Test
+    public void checkgetHighCardWinnerWithTie(){
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getWinnerHighCard("8H 9S 2D 3C 9H","9C 8C 9D 3C 2H");
+        Assertions.assertEquals("Tie.", strExpected);
+    }
+
 
 }
 

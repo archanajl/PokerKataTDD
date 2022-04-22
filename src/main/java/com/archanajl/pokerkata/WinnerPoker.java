@@ -68,6 +68,10 @@ public class WinnerPoker {
         strResult = getWinnerNOfaKind(strPlayer1, strPlayer2,3);
         if (strResult != "") return strResult;
 
+        // Check High card
+        strResult = getWinnerHighCard(strPlayer1, strPlayer2);
+        if (strResult != "") return strResult;
+
         return strResult;
     }
 
@@ -220,12 +224,9 @@ public class WinnerPoker {
 
         boolean isPlayerOneStrFlush = false;
         boolean isPlayerTwoStrFlush = false;
-        int card1 = INVALID_VALUE;
-        int card2 = INVALID_VALUE;
 
         int[] player1cardValues = getCardValues(strPlayer1);
         Arrays.sort(player1cardValues);
-        card1 = player1cardValues[player1cardValues.length-1];
         if ( ( player1cardValues[0] + 1 == player1cardValues[1])
                 && ( player1cardValues[1] + 1 == player1cardValues[2])
                 && ( player1cardValues[2] + 1 == player1cardValues[3])
@@ -234,7 +235,6 @@ public class WinnerPoker {
 
         int[] player2cardValues = getCardValues(strPlayer2);
         Arrays.sort(player2cardValues);
-        card2 = player2cardValues[player2cardValues.length-1];
         if ( ( player2cardValues[0] + 1 == player2cardValues[1])
                 && ( player2cardValues[1] + 1 == player2cardValues[2])
                 && ( player2cardValues[2] + 1 == player2cardValues[3])
@@ -253,6 +253,27 @@ public class WinnerPoker {
         if (isPlayerOneStrFlush) return "Black wins. - Straight.";
         if (isPlayerTwoStrFlush) return "White wins. - Straight.";
         return "";
+    }
+
+    public String getWinnerHighCard(String strPlayer1, String strPlayer2){
+
+        ArrayList<Integer> card1List = new ArrayList<>();
+        ArrayList<Integer> card2List = new ArrayList<>();
+        int value;
+        String[] str1Entries = strPlayer1.split(" ");
+
+        for (String strEntry:str1Entries ) {
+            value = strCard.indexOf(strEntry.charAt(0));
+            card1List.add(value);
+        }
+        String[] str2Entries = strPlayer2.split(" ");
+        for (String strEntry:str2Entries ) {
+            value = strCard.indexOf(strEntry.charAt(0));
+            card2List.add(value);
+        }
+
+        return getHighCardWinnerString(card1List,card2List,"High card");
+
     }
 
     public String getHighCardWinnerString(ArrayList<Integer> player1List, ArrayList<Integer> player2List, String winnerType){
