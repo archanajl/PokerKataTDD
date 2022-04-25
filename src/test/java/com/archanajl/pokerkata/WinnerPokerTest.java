@@ -384,7 +384,7 @@ public class WinnerPokerTest {
     @Test
     public void checkgetTwoPairBothPlayersWhiteHigh(){
         WinnerPoker poker = new WinnerPoker();
-        String strExpected = poker.getPair("5H 5C 6C TA 6H","AH AC 6C TA 6H");
+        String strExpected = poker.getPair("5H 5C 6C TA 6H","AH AC 6C KA 6H");
         Assertions.assertEquals("White wins. - Two Pairs.", strExpected);
     }
 
@@ -420,42 +420,42 @@ public class WinnerPokerTest {
     public void checkgetPairWinnerOne(){
         WinnerPoker poker = new WinnerPoker();
         String strExpected = poker.getPair("AH AC 5C TA 6H","5H 3H AD 8H TD");
-        Assertions.assertEquals("Black wins. - One Pair.", strExpected);
+        Assertions.assertEquals("Black wins. - Pair.", strExpected);
     }
 
     @Test
     public void checkgetPairWinnerTwo(){
         WinnerPoker poker = new WinnerPoker();
         String strExpected = poker.getPair("5H 3H AD 8H TD","5H 5C AC TA 6H");
-        Assertions.assertEquals("White wins. - One Pair.", strExpected);
+        Assertions.assertEquals("White wins. - Pair.", strExpected);
     }
 
     @Test
     public void checkgetPairBothPlayersWhiteHigh(){
         WinnerPoker poker = new WinnerPoker();
         String strExpected = poker.getPair("5H 5C 8C TA 6H","AH AC 5C TA 6H");
-        Assertions.assertEquals("White wins. - One Pair.", strExpected);
+        Assertions.assertEquals("White wins. - Pair.", strExpected);
     }
 
     @Test
     public void checkgetPairBothPlayersBlackHigh(){
         WinnerPoker poker = new WinnerPoker();
         String strExpected = poker.getPair("AH AC 6C TA 8H","5H 5C 6C TA 8H");
-        Assertions.assertEquals("Black wins. - One Pair.", strExpected);
+        Assertions.assertEquals("Black wins. - Pair.", strExpected);
     }
 
     @Test
     public void checkgetPairBothPlayersBlackNotPairHigh(){
         WinnerPoker poker = new WinnerPoker();
-        String strExpected = poker.getPair("AH AC 9C TA 7H","AS AD 8D TA 6S");
-        Assertions.assertEquals("Black wins. - One Pair.", strExpected);
+        String strExpected = poker.getPair("AH AC 9C TA 7H","AS AD 8D 5A 6S");
+        Assertions.assertEquals("Black wins. - Pair.", strExpected);
     }
 
     @Test
     public void checkgetPairBothPlayersWhiteNotPairHigh(){
         WinnerPoker poker = new WinnerPoker();
-        String strExpected = poker.getPair("AH AC 6C TA 6H","AS AD 8D TA 6S");
-        Assertions.assertEquals("White wins. - One Pair.", strExpected);
+        String strExpected = poker.getPair("AH AC 6C TA 5H","AS AD 8D KA 6S");
+        Assertions.assertEquals("White wins. - Pair.", strExpected);
     }
 }
 

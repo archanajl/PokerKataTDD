@@ -278,43 +278,34 @@ public class WinnerPoker {
             if (player2ValueMap.get(num).size() == 2) card2PairList.add(num);
             else card2OtherList.add(num);
         }
-        if (card1PairList.size() == 0 && card2PairList.size() == 0) return "";
-        if (card1PairList.size() == 0) return "White wins. - Two Pairs.";
-        if (card2PairList.size() == 0) return "Black wins. - Two Pairs.";
-        String strResult = getPairWinnerString(card1PairList,card2PairList);
-        if  (strResult == "") {
-            return getPairWinnerString(card1OtherList,card2OtherList);
-        }else
-            return strResult;
 
-    }
+        // When there are two pairs
+        if (card1PairList.size() == 2 && card2PairList.size() ==2)  {
+            String str = getHighCardWinnerString(card1PairList,card2PairList,"Two Pairs");
+            if (str=="Tie.") {
+                if (card1OtherList.get(0) > card2OtherList.get(0)) return "Black wins. - Two Pairs.";
+                else if (card1OtherList.get(0) < card2OtherList.get(0)) return "White wins. - Two Pairs.";
+                else return "Tie";
+            } else return str;
 
-    public String getPairWinnerString(ArrayList<Integer> player1PairList, ArrayList<Integer> player2PairList){
-
-        boolean foundMax = false;
-        while(!foundMax ) {
-            Optional<Integer> max1Number = player1PairList.stream()
-                    .max((i, j) -> i.compareTo(j));
-            Optional<Integer> max2Number = player2PairList.stream()
-                    .max((i, j) -> i.compareTo(j));
-            if (max1Number.get() > max2Number.get()){
-                foundMax =true;
-                return "Black wins. - Two Pairs.";
-            }else if (max1Number.get() < max2Number.get()){
-                foundMax =true;
-                return "White wins. - Two Pairs.";
-            }else{
-                foundMax = false;
-                player1PairList.remove(max1Number.get());
-                player2PairList.remove(max2Number.get());
-                if (player1PairList.size() == 0 && player2PairList.size() == 0) return "";
-                if (player1PairList.size() == 0) return "Black wins. - Two Pairs.";
-                if (player2PairList.size() == 0) return "White wins. - Two Pairs.";
-            }
         }
+        if (card1PairList.size() == 2) return "Black wins. - Two Pairs.";
+        if (card2PairList.size() == 2) return "White wins. - Two Pairs.";
 
+        // When there are one pair
+        if (card1PairList.size() == 1 && card2PairList.size() == 1){
+            if (card1PairList.get(0) > card2PairList.get(0)) return "Black wins. - Pair.";
+            else if (card1PairList.get(0) < card2PairList.get(0)) return "White wins. - Pair.";
+
+            //find which has high car
+            else return getHighCardWinnerString(card1OtherList,card2OtherList,"Pair");
+        }
+        if (card1PairList.size() == 1) return "Black wins. - Pair.";
+        if (card2PairList.size() == 1) return "White wins. - Pair.";
         return "";
+
     }
+
 
     public String getWinnerHighCard(String strPlayer1, String strPlayer2){
 
@@ -408,6 +399,7 @@ public class WinnerPoker {
         int[] cardValues = { strCard.indexOf(strEntry[0].charAt(0)), strCard.indexOf(strEntry[1].charAt(0)),
                 strCard.indexOf(strEntry[2].charAt(0)),strCard.indexOf(strEntry[3].charAt(0)),
                 strCard.indexOf(strEntry[4].charAt(0)) };
+        Arrays.sort(cardValues);
         return cardValues;
     }
 
