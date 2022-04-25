@@ -80,14 +80,12 @@ Hands which both contain 2 pairs are ranked by the value of their highest pair.
 Hands with the same highest pair are ranked by the value of their other pair.
 If these values are the same the hands are ranked by the value of the remaining card.
 
-### <ins>Yet to do</ins>
-
-- Step One
+- Step Ten
 
 Check for Pair.
-2 of the 5 cards in the hand have the same value. 
-Hands which both contain a pair are ranked by the value of the cards forming the pair. 
-If these values are the same, the hands are ranked by the values of the cards not forming the pair, 
+2 of the 5 cards in the hand have the same value.
+Hands which both contain a pair are ranked by the value of the cards forming the pair.
+If these values are the same, the hands are ranked by the values of the cards not forming the pair,
 in decreasing order.
 
 ### <ins> Testcases </ins>

@@ -261,48 +261,55 @@ public class WinnerPoker {
 
     public  String getPair(String strPlayer1, String strPlayer2){
 
-        ArrayList<Integer> card1List = new ArrayList<>();
-        ArrayList<Integer> card2List = new ArrayList<>();
+        ArrayList<Integer> card1PairList = new ArrayList<>();
+        ArrayList<Integer> card1OtherList = new ArrayList<>();
+        ArrayList<Integer> card2PairList = new ArrayList<>();
+        ArrayList<Integer> card2OtherList = new ArrayList<>();
 
         String strWinnerType = "";
         HashMap<Integer, ArrayList<String>> player1ValueMap = getValueMap(strPlayer1);
         for (Integer num : player1ValueMap.keySet()){
-            if (player1ValueMap.get(num).size() == 2) card1List.add(num);
+            if (player1ValueMap.get(num).size() == 2) card1PairList.add(num);
+            else card1OtherList.add(num);
 
         }
         HashMap<Integer, ArrayList<String>> player2ValueMap = getValueMap(strPlayer2);
         for (Integer num : player2ValueMap.keySet()){
-            if (player2ValueMap.get(num).size() == 2) card2List.add(num);
+            if (player2ValueMap.get(num).size() == 2) card2PairList.add(num);
+            else card2OtherList.add(num);
         }
-        return getPairWinnerString(card1List,card2List,"Two Pair")   ;
+        if (card1PairList.size() == 0 && card2PairList.size() == 0) return "";
+        if (card1PairList.size() == 0) return "White wins. - Two Pairs.";
+        if (card2PairList.size() == 0) return "Black wins. - Two Pairs.";
+        String strResult = getPairWinnerString(card1PairList,card2PairList);
+        if  (strResult == "") {
+            return getPairWinnerString(card1OtherList,card2OtherList);
+        }else
+            return strResult;
 
     }
 
-    public String getPairWinnerString(ArrayList<Integer> player1List, ArrayList<Integer> player2List, String winnerType){
+    public String getPairWinnerString(ArrayList<Integer> player1PairList, ArrayList<Integer> player2PairList){
 
-        if (player1List.size() == 0 && player2List.size() == 0) return "";
-        if (player1List.size() == 0) return "White wins. - " + winnerType + ".";
-        if (player2List.size() == 0) return "Black wins. - " + winnerType + ".";
         boolean foundMax = false;
         while(!foundMax ) {
-
-            Optional<Integer> max1Number = player1List.stream()
+            Optional<Integer> max1Number = player1PairList.stream()
                     .max((i, j) -> i.compareTo(j));
-            Optional<Integer> max2Number = player2List.stream()
+            Optional<Integer> max2Number = player2PairList.stream()
                     .max((i, j) -> i.compareTo(j));
             if (max1Number.get() > max2Number.get()){
                 foundMax =true;
-                return "Black wins. - " + winnerType + ".";
+                return "Black wins. - Two Pairs.";
             }else if (max1Number.get() < max2Number.get()){
                 foundMax =true;
-                return "White wins. - " + winnerType + ".";
+                return "White wins. - Two Pairs.";
             }else{
                 foundMax = false;
-                player1List.remove(max1Number.get());
-                player2List.remove(max2Number.get());
-                if (player1List.size() == 0 && player2List.size() == 0) return "";
-                if (player1List.size() == 0) return "Black wins. - " + winnerType + ".";
-                if (player2List.size() == 0) return "White wins. - " + winnerType + ".";
+                player1PairList.remove(max1Number.get());
+                player2PairList.remove(max2Number.get());
+                if (player1PairList.size() == 0 && player2PairList.size() == 0) return "";
+                if (player1PairList.size() == 0) return "Black wins. - Two Pairs.";
+                if (player2PairList.size() == 0) return "White wins. - Two Pairs.";
             }
         }
 
