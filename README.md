@@ -72,17 +72,17 @@ Test it by giving the string by both losers, each winner, both winners and also 
 Check for High Card. Hands which do not fit any higher category are ranked by the value of their highest 
 card. If the highest cards have the same value, the hands are ranked by the next highest, and so on.
 
+- Step Nine
+
+Check for Two Pairs.
+The hand contains 2 different pairs.
+Hands which both contain 2 pairs are ranked by the value of their highest pair.
+Hands with the same highest pair are ranked by the value of their other pair.
+If these values are the same the hands are ranked by the value of the remaining card.
+
 ### <ins>Yet to do</ins>
 
 - Step One
-
-Check for Two Pairs.
-The hand contains 2 different pairs. 
-Hands which both contain 2 pairs are ranked by the value of their highest pair. 
-Hands with the same highest pair are ranked by the value of their other pair. 
-If these values are the same the hands are ranked by the value of the remaining card.
-
-- Step Two
 
 Check for Pair.
 2 of the 5 cards in the hand have the same value. 

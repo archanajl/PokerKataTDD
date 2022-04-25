@@ -68,6 +68,10 @@ public class WinnerPoker {
         strResult = getWinnerNOfaKind(strPlayer1, strPlayer2,3);
         if (strResult != "") return strResult;
 
+        // Check Two Pair
+        strResult = getPair(strPlayer1, strPlayer2);
+        if (strResult != "") return strResult;
+
         // Check High card
         strResult = getWinnerHighCard(strPlayer1, strPlayer2);
         if (strResult != "") return strResult;
@@ -252,6 +256,56 @@ public class WinnerPoker {
         }
         if (isPlayerOneStrFlush) return "Black wins. - Straight.";
         if (isPlayerTwoStrFlush) return "White wins. - Straight.";
+        return "";
+    }
+
+    public  String getPair(String strPlayer1, String strPlayer2){
+
+        ArrayList<Integer> card1List = new ArrayList<>();
+        ArrayList<Integer> card2List = new ArrayList<>();
+
+        String strWinnerType = "";
+        HashMap<Integer, ArrayList<String>> player1ValueMap = getValueMap(strPlayer1);
+        for (Integer num : player1ValueMap.keySet()){
+            if (player1ValueMap.get(num).size() == 2) card1List.add(num);
+
+        }
+        HashMap<Integer, ArrayList<String>> player2ValueMap = getValueMap(strPlayer2);
+        for (Integer num : player2ValueMap.keySet()){
+            if (player2ValueMap.get(num).size() == 2) card2List.add(num);
+        }
+        return getPairWinnerString(card1List,card2List,"Two Pair")   ;
+
+    }
+
+    public String getPairWinnerString(ArrayList<Integer> player1List, ArrayList<Integer> player2List, String winnerType){
+
+        if (player1List.size() == 0 && player2List.size() == 0) return "";
+        if (player1List.size() == 0) return "White wins. - " + winnerType + ".";
+        if (player2List.size() == 0) return "Black wins. - " + winnerType + ".";
+        boolean foundMax = false;
+        while(!foundMax ) {
+
+            Optional<Integer> max1Number = player1List.stream()
+                    .max((i, j) -> i.compareTo(j));
+            Optional<Integer> max2Number = player2List.stream()
+                    .max((i, j) -> i.compareTo(j));
+            if (max1Number.get() > max2Number.get()){
+                foundMax =true;
+                return "Black wins. - " + winnerType + ".";
+            }else if (max1Number.get() < max2Number.get()){
+                foundMax =true;
+                return "White wins. - " + winnerType + ".";
+            }else{
+                foundMax = false;
+                player1List.remove(max1Number.get());
+                player2List.remove(max2Number.get());
+                if (player1List.size() == 0 && player2List.size() == 0) return "";
+                if (player1List.size() == 0) return "Black wins. - " + winnerType + ".";
+                if (player2List.size() == 0) return "White wins. - " + winnerType + ".";
+            }
+        }
+
         return "";
     }
 

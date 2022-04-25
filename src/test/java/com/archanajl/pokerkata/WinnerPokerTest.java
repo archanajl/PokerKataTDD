@@ -360,6 +360,40 @@ public class WinnerPokerTest {
     }
 
 
+    @Test
+    public void checkgetPairNoWinner(){
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getPair("7H 9S 5D 6C 9D","9H 8C 9C 3C 2H");
+        Assertions.assertEquals("", strExpected);
+    }
+
+    @Test
+    public void checkgetPairWinnerOne(){
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getPair("AH AC 6C TA 6H","5H 3H AD 8H TD");
+        Assertions.assertEquals("Black wins. - Two Pair.", strExpected);
+    }
+
+    @Test
+    public void checkgetPairWinnerTwo(){
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getPair("5H 3H AD 8H TD","5H 5C 6C TA 6H");
+        Assertions.assertEquals("White wins. - Two Pair.", strExpected);
+    }
+
+    @Test
+    public void checkgetPairBothPlayersWhiteHigh(){
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getPair("5H 5C 6C TA 6H","AH AC 6C TA 6H");
+        Assertions.assertEquals("White wins. - Two Pair.", strExpected);
+    }
+
+    @Test
+    public void checkgetPairBothPlayersBlackHigh(){
+        WinnerPoker poker = new WinnerPoker();
+        String strExpected = poker.getPair("AH AC 6C TA 6H","5H 5C 6C TA 6H");
+        Assertions.assertEquals("Black wins. - Two Pair.", strExpected);
+    }
 }
 
 
