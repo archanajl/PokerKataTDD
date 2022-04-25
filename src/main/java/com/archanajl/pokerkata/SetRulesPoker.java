@@ -1,45 +1,17 @@
 package com.archanajl.pokerkata;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class WinnerPoker {
+public class SetRulesPoker {
 
     private final String strCard = "23456789TJQKA";
+
     private final int INVALID_VALUE = 99;
-
-    public String decalreWinner(){
-        return "";
-    }
-
-    public void decalreWinner(String input){
-        String[][] inputArr = getInputPlayersArray(input);
-        int numberofentry = inputArr.length;
-        String strPlayer1 ;
-        String strPlayer2;
-        String winner;
-        for (int i=0; i <= numberofentry - 1; i++ ){
-            strPlayer1 = inputArr[i][0];
-            strPlayer2 = inputArr[i][1];
-            winner = checkWinner(strPlayer1,strPlayer2);
-            System.out.println("The result for Game " + (i + 1) + " : " + winner);
-        }
-    }
-
-    public String[][] getInputPlayersArray(String input){
-        String[] inputLine = input.split("\n");
-        int numberofentry = inputLine.length;
-        String[][] inputArr = new String[numberofentry][2];
-        for (int i=0; i <= numberofentry - 1; i++ ){
-            int playerIndex = inputLine[i].indexOf("White:");
-            String strPlayer1 = inputLine[i].substring(0,playerIndex);
-            String strPlayer2 = inputLine[i].substring(playerIndex);
-            inputArr[i][0]= strPlayer1.trim().replace("Black: ","");
-            inputArr[i][1]= strPlayer2.trim().replace("White: ","");
-        }
-        return inputArr;
-    }
 
     public String checkWinner(String strPlayer1, String strPlayer2){
 
@@ -297,7 +269,7 @@ public class WinnerPoker {
             if (card1PairList.get(0) > card2PairList.get(0)) return "Black wins. - Pair.";
             else if (card1PairList.get(0) < card2PairList.get(0)) return "White wins. - Pair.";
 
-            //find which has high car
+                //find which has high car
             else return getHighCardWinnerString(card1OtherList,card2OtherList,"Pair");
         }
         if (card1PairList.size() == 1) return "Black wins. - Pair.";
@@ -305,7 +277,6 @@ public class WinnerPoker {
         return "";
 
     }
-
 
     public String getWinnerHighCard(String strPlayer1, String strPlayer2){
 
@@ -354,6 +325,7 @@ public class WinnerPoker {
 
         return "";
     }
+
     public HashMap<Integer,ArrayList<String>>  getValueMap(String strPlayer){
 
         HashMap<Integer, ArrayList<String>> valueMap = new HashMap<>();
@@ -369,7 +341,7 @@ public class WinnerPoker {
                 stringList.add(Character.toString(strEntry.charAt(1)));
                 valueMap.put(strCard.indexOf(strEntry.charAt(0)),stringList);
             }
-      }
+        }
         return valueMap;
     }
 
@@ -378,7 +350,7 @@ public class WinnerPoker {
         String[] strEntries = strPlayer.split(" ");
         int value;
         for (String strEntry:strEntries ) {
-             value = strCard.indexOf(strEntry.charAt(0));//Integer.parseInt(String.valueOf(strEntry.charAt(0)));
+            value = strCard.indexOf(strEntry.charAt(0));//Integer.parseInt(String.valueOf(strEntry.charAt(0)));
             if (!faceMap.containsKey(Character.toString(strEntry.charAt(1)))) {
                 ArrayList<Integer> integerList = new ArrayList<Integer>();
                 integerList.add(value);
@@ -410,5 +382,6 @@ public class WinnerPoker {
                 strEntry[2].charAt(1),strEntry[3].charAt(1),strEntry[4].charAt(1)};
         return faceValues;
     }
+
 
 }

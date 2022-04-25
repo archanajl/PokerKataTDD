@@ -90,7 +90,7 @@ in decreasing order.
 
 ### <ins> Testcases </ins>
 
-Please click [here](https://htmlpreview.github.io/?https://github.com/archanajl/BowlingKataTDD/blob/master/docs/Test%20Results%20-%20WinnerPokerTest.html) to see the test results.
+Please click [here](https://htmlpreview.github.io/?https://github.com/archanajl/PokerKataTDD/blob/master/docs/Test%20Results%20-%20GetWinnerPokerTest.html) to see the test results.
 
 ### <ins>Technologies Used</ins>
 
